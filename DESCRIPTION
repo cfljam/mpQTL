@@ -25,5 +25,9 @@ RoxygenNote: 7.2.2
 Imports:
     colorspace (>= 1.4), parallel, grDevices, graphics,
     stats, utils
-Suggests: knitr, rmarkdown
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 Maintainer: Giorgio Tumino <giorgio.tumino@wur.nl>
+Config/testthat/edition: 3
