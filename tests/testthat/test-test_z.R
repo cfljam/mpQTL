@@ -26,7 +26,7 @@ test_that(desc='cofactor matrix rownames match phenotype matrix',
           code = {expect_identical(rownames(cof_matrix),rownames(pheno_matrix))})
 
 
-test_that(desc = 'linear model with z matrix works',
+test_that(desc = 'linear model with z matrix  and cofactors works',
           code = {expect_no_error(
             map.QTL(
             phenotypes = pheno_matrix,
@@ -40,3 +40,25 @@ test_that(desc = 'linear model with z matrix works',
           }
 )
 
+## Test Simple Case of a Single Replicate
+##
+mppheno2 <- rbind(54,mppheno)
+rownames(mppheno2) <- c(c("A1_P1_1","A1_P1_2"),rownames(mppheno)[-1])
+# form diag matrix
+Z <- diag(nrow(mppheno))
+z_matrix2 <- rbind(Z[1,],Z[1,],Z[-1,])
+
+rownames(z_matrix2) <- rownames(mppheno2)
+colnames(z_matrix2) <- rownames(mppheno)
+
+test_that(desc = 'linear model with z matrix  no cofactors works',
+          code = {expect_no_error(
+            map.QTL(
+              phenotypes = mppheno2,
+              genotypes = mpsnpdose,
+              Z = z_matrix2,
+              ploidy = 4,
+              map = mpmap)
+          )
+          }
+)
